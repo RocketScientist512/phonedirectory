@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import Header from './Header.js';
-import './App.css';
+import './ShowSubscribers.css';
+import { Link } from 'react-router-dom';
 
-class App extends Component {
+class ShowSubscribers extends Component {
 
   clickHandler(message){
     alert(message);
   }
 
-  constructor(){
-    super();
-    this.state={
-      subscribersListToShow: []
-    }
-    console.log("Constructor Called");
-  }
+  //We do not need this anymore as we are updating all of this in the PhoneDirectory.js file. 
+  // constructor(){
+  //   super();
+  //   this.state={
+  //     subscribersListToShow: []
+  //   }
+  //   console.log("Constructor Called");
+  // }
 
   // componentDidMount(){
   //   console.log("Component Did Mount Called");
@@ -28,6 +30,12 @@ class App extends Component {
 
   // this.setState({subscribersListToShow: subscribersList})  ;
   // }
+
+  //we are making ShowSubscriber.js into a dumb component as well
+
+  onDeletedClick = (subscriberId) =>{
+    this.props.deleteSubscriberHandler(subscriberId);
+  }
 
 
   render() {
@@ -52,9 +60,10 @@ class App extends Component {
           <span>Name</span><br />
           <span>Phone</span> */}
           <div>
+          
         <Header />
           <div className="component-body-container">
-            <button className="custom-btn add-btn">Add</button>
+            <Link to="/add"><button className="custom-btn add-btn">Add</button></Link>
 
             <div className="grid-container heading-container">
                 <span className="grid-item name-heading">Name</span>
@@ -63,11 +72,11 @@ class App extends Component {
               </div>
 
               {
-                this.state.subscribersListToShow.map(sub =>{
+                this.props.subscriberList.map(sub =>{
                   return <div key={sub.id} className='grid-container'>
                     <span className='grid-item'>{sub.name}</span>
                     <span className='grid-item'>{sub.phone}</span>
-                    <button className='delete-item' onClick={this.clickHandler.bind(this, "Delete Clicked")}>Delete</button>
+                    <button className='delete-item' onClick={this.onDeletedClick.bind(this.sub.id)}>Delete</button>
                     </div>
                 })
               }
@@ -86,4 +95,4 @@ class App extends Component {
     );
   }
 }
-export default App;
+export default ShowSubscribers;
